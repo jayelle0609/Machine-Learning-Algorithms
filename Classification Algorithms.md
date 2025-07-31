@@ -1,5 +1,14 @@
 ## SUPERVISED LEARNING - Classification (Yes = 1 or No = 0)
-In this post, I will be sharing 
+[Link to full algorithm code on my personal Google Docs](https://docs.google.com/document/d/1y3ZkecbodvG_-noAnZCURoGXor-orNFvrV_73whGOWE/edit?usp=sharing)
+
+In this document, I will be explaining on the second portion to supervised learning in machine learning, classification. I will also be providing the algorithms for it. The code here is generalised simply for easy adaptation to different datas sets.
+
+- **Logistic Regression Model**
+- **K-Nearest Neighbor (KNN) Model**
+- **Decision Tree Classification Model**
+- **Random Forest Classification Model**
+
+---
 ## Logistic Regression
 
 Goal : Determine whether 0 or 1, using 2 independent variables
