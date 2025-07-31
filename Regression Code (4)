@@ -1,0 +1,235 @@
+# SUPERVISED LEARNING - Numeric Prediction
+
+## Linear Regression Model (Test and Train)
+# Importing the dataset
+dataset = pd.read_csv('Salary_Data.csv')
+X = dataset.iloc[:, :-1].values  OR         X = df.drop(y)
+y = dataset.iloc[:, 1].values OR             y = df[y]
+# Splitting the dataset into the Training set and Test set
+from sklearn.model_selection import train_test_split
+X_train, X_test, y_train, y_test = train_test_split(X, y, test_size = 1/3, random_state = 0)
+# Fitting Simple Linear Regression to the Training set
+from sklearn.linear_model import LinearRegression
+regressor = LinearRegression()
+regressor.fit(X_train, y_train)
+# Predicting the Test set results
+y_pred = regressor.predict(X_test)
+# Visualising the Training set results
+plt.scatter(X_train, y_train, color = 'red')
+plt.plot(X_train, regressor.predict(X_train), color = 'blue')
+plt.title('Salary vs Experience (Training set)')
+plt.xlabel('Years of Experience')
+plt.ylabel('Salary')
+plt.show()
+# Visualising the Test set results
+plt.scatter(X_test, y_test, color = 'red')
+plt.plot(X_train, regressor.predict(X_train), color = 'blue')
+plt.title('Salary vs Experience (Test set)')
+plt.xlabel('Years of Experience')
+plt.ylabel('Salary')
+plt.show()
+
+The overall goal here is to create a model that will predict Salary based on Years of Experience. First, we create a model using the Training Set (70% of the dataset). It will then fit a line that is close as possible with most of the data points. After the line is created, we then apply that same line to the Test Set (the remaining 30% or 1/3 of the dataset).
+
+Notice that the line performed well both on the Training Set and the Test Set. As a result, there’s a good chance that the line or our model will also perform well on new data.
+
+
+## Multiple Linear Regression Model (Test and Train)
+The goal is still to fit a line that best shows the relationship between an independent variable and the target. The difference is that in Multiple Linear Regression, we have to deal with
+at least 2 features or independent variables.
+
+Notice that there are multiple features or independent variables (R&D Spend, Administration, Marketing Spend, State). Again, the goal here is to reveal or discover a relationship between the independent variables and the target (Profit).
+
+Y = ax1 + bx2 + cx3 …
+
+Transforming categorical data (New York, California, Florida) into numerical data with One Hot Encoding. (0 for no, 1 for yes)
+
+from sklearn.preprocessing import LabelEncoder, OneHotEncoder
+labelencoder = LabelEncoder()
+X[:, 3] = labelencoder.fit_transform(X[:, 3]) #Note this
+onehotencoder = OneHotEncoder(categorical_features = [3])
+X = onehotencoder.fit_transform(X).toarray()
+
+import numpy as np
+import matplotlib.pyplot as plt
+import pandas as pd
+
+# Importing the dataset
+dataset = pd.read_csv('50_Startups.csv')
+X = dataset.iloc[:, :-1].values X = df.drop(y)
+y = dataset.iloc[:, 4].values  Y = df[y]
+
+#Let’s look at the data: 
+dataset.head()
+
+Then, we transform categorical variables into numeric ones (dummy variables):
+# Encoding categorical data
+from sklearn.preprocessing import LabelEncoder, OneHotEncoder
+labelencoder = LabelEncoder()
+X[:, 3] = labelencoder.fit_transform(X[:, 3])
+onehotencoder = OneHotEncoder(categorical_features = [3])
+X = onehotencoder.fit_transform(X).toarray() # Avoiding the Dummy Variable Trap
+# If we have n categorical variables (which we want to change into numeric 0 or 1 dummy variables), we will make n-1 dummy variables → to prevent model from thinking the dummy variables are correlated (perfect multicollinearity = coefficients all add up to 1) → overfit
+X = X[:, 1:]
+
+Now we’re all set to dividing the dataset into Training Set and Test Set. We can do this with the following lines of code: 
+from sklearn.model_selection import train_test_split
+X_train, X_test, y_train, y_test = train_test_split(X, y, test_size = 0.2,random_state = 42) 
+# 80% Training Set, 20% Test Set. 
+# Next step is we can then create a regressor and “fit the line” (and use that line on Test Set): from sklearn.linear_model import LinearRegression
+regressor = LinearRegression()
+regressor.fit(X_train, y_train)
+# Predicting the Test set results
+y_pred = regressor.predict(X_test)
+
+Summary
+# Import necessary libraries
+import pandas as pd
+from sklearn.model_selection import train_test_split
+
+# Load your data into dataframe
+df = pd.read_csv('your_dataset.csv')
+
+# Prepare features and target
+X = df.drop('target_column', axis=1)
+y = df['target_column']
+
+# Split the data
+X_train, X_test, y_train, y_test = train_test_split(X, y, test_size=0.2, random state = 42)
+
+# Verify the split – Check the shape of the dataframes:
+print("Training set shapes:", X_train.shape, y_train.shape)
+print("Test set shapes:", X_test.shape, y_test.shape)
+
+# Verify the split – Check some datapoints:
+print("\nSome features from the training set:")
+print(X_train)
+print("\nSome labels from the training set:")
+print(y_train)
+
+# k-fold cross validation (10), validation set???
+
+
+However, there are two major concerns while deciding on the optimum split:
+If there is less training data, the machine learning model will show high variance in training.
+With less testing data/validation data, your model evaluation/model performance statistic will have greater variance.
+
+
+
+
+
+
+
+Decision Tree Regression
+The Regression method discussed so far is very good if there’s a linear relationship between the independent variables and the target. But what if there’s no linearity (but the dependent variables can still be used to predict the target)?
+
+USE when there’s not much linearity between independent variables Xi (features) and Y (target)
+
+Decision Tree Regression works by breaking down the dataset into smaller and smaller subsets.
+
+Predictors = X (features, factors, independent variables, attributes)
+Target = Y (outcome, dependent variable)
+
+Decision nodes, leaf nodes.
+
+import numpy as np
+import matplotlib.pyplot as plt
+import pandas as pd
+
+# Importing the dataset
+dataset = pd.read_csv('Position_Salaries.csv')
+X = dataset.iloc[:, 1:2].values X=df.drop(y)
+y = dataset.iloc[:, 2].values y = df[y]
+
+# Splitting the dataset into the Training set and Test set
+from sklearn.cross_validation import train_test_split
+X_train, X_test, y_train, y_test = train_test_split(X, y, test_size = 0.2, random_state = 0)
+
+# Fitting Decision Tree Regression to the dataset
+from sklearn.tree import DecisionTreeRegressor
+regressor = DecisionTreeRegressor(random_state = 0)
+regressor.fit(X, y)
+
+# Predicting a new result
+y_pred = regressor.predict(X_test)
+regressor.score=(X_test, y_test)
+
+From sklearn.metrics import classification_report
+classification_report(y_test,y_test) → precision, recall, f1 score, support
+features = pd.Dataframe(regressor.feature_importances_, index = X.columns) → shows importance of each variable
+
+# Visualising the Decision Tree Regression results (higher resolution)
+X_grid = np.arange(min(X), max(X), 0.01)
+X_grid = X_grid.reshape((len(X_grid), 1))
+
+plt.scatter(X, y, color = 'red')
+plt.plot(X_grid, regressor.predict(X_grid), color = 'blue')
+plt.title('Truth or Bluff (Decision Tree Regression)')
+plt.xlabel('Position level')
+plt.ylabel('Salary')
+plt.show()
+
+Notice that there’s no linear relationship between the Position Level and theSalary. Instead, it’s somewhat a step-wise result
+Random Forest Regression
+As discussed earlier, Decision Tree Regression can be good to use when there’s not much linearity between an independent variable and a target. However, this approach uses the dataset once to come up with results. 
+
+That’s because in many cases, it’s always good to get different results from different approaches (e.g. many decision trees) and then averaging those results. To solve this, many data scientists use Random Forest Regression. This is simply a collection or ensemble of different decision trees wherein random different subsets are used and then the results are averaged. It’s like creating decision trees again and again and then getting the results of each.
+
+Many decision trees, many results and averaging the many results = Random Forest
+Collection of many decision trees and averages results to reduce errors
+
+# Importing the libraries
+import numpy as np
+import matplotlib.pyplot as plt
+import pandas as pd
+%matplotlib inline
+
+# Importing the dataset
+dataset = pd.read_csv('Position_Salaries.csv')
+X = dataset.iloc[:, 1:2].values X=df.drop(y)
+y = dataset.iloc[:, 2].values y=df[y]
+
+# Splitting the dataset into the Training set and Test set
+from sklearn.cross_validation import train_test_split
+X_train, X_test, y_train, y_test = train_test_split(X, y, test_size = 0.2, random_state = 0)
+
+
+
+
+# Feature Scaling
+from sklearn.preprocessing import StandardScaler
+sc_X = StandardScaler()
+X_train = sc_X.fit_transform(X_train)
+X_test = sc_X.transform(X_test)
+sc_y = StandardScaler()
+y_train = sc_y.fit_transform(y_train)
+
+# Fitting Random Forest Regression to the dataset
+from sklearn.ensemble import RandomForestRegressor
+regressor = RandomForestRegressor(n_estimators = 300, random_state = 0)
+regressor.fit(X, y)
+
+# N_estimators = no. of decision trees to form forest
+
+# Predicting a new result
+y_pred = regressor.predict(X_test)
+regressor.score=(X_test, y_test)
+
+From sklearn.metrics import classification_report
+classification_report(y_test,y_test) → precision, recall, f1 score, support
+features = pd.Dataframe(regressor.feature_importances_, index = X.columns) → shows importance of each variable
+
+
+# Visualising the Random Forest Regression results (higher resolution)
+X_grid = np.arange(min(X), max(X), 0.01)
+X_grid = X_grid.reshape((len(X_grid), 1))
+plt.scatter(X, y, color = 'red')
+plt.plot(X_grid, regressor.predict(X_grid), color = 'blue')
+plt.title('Truth or Bluff (Random Forest Regression)')
+plt.xlabel('Position level')
+plt.ylabel('Salary')
+
+plt.show()
+
+
+
