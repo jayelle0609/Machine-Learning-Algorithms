@@ -1,1 +1,235 @@
+# **SUPERVISED LEARNING - Numeric Prediction**
+[Link to full algorithm code on my personal Google Docs](https://docs.google.com/document/d/1y3ZkecbodvG_-noAnZCURoGXor-orNFvrV_73whGOWE/edit?usp=sharing)
 
+In this document, I will be explaining how we can make numeric predictions through forecasting on past data, with the help of machine learning algorithms. The code here is generalised simply for easy adaptation to different datas sets.
+
+- **Linear Regression Model**
+- **Multiple Linear Regression Model**
+- **Decision Tree Regression Model**
+- **Random Forest Regression Model**
+
+---
+
+## **A. Linear Regression Model (Test and Train)**
+
+**1. Importing the dataset**
+```python
+dataset = pd.read_csv('Salary_Data.csv')
+
+X = dataset.iloc[:, :-1].values           OR         X = df.drop(y)
+
+y = dataset.iloc[:, 1].values             OR             y = df[y]
+```
+
+**2. Splitting the dataset into the Training set and Test set**
+```python
+from sklearn.model_selection import train_test_split
+
+X_train, X_test, y_train, y_test = train_test_split(X, y, test_size = 1/3, random_state = 0)
+```
+
+**3. Fitting Simple Linear Regression to the Training set**
+```python
+from sklearn.linear_model import LinearRegression
+
+regressor = LinearRegression()
+regressor.fit(X_train, y_train)
+```
+
+**4. Predicting the Test set results**
+```python
+y_pred = regressor.predict(X_test)
+```
+
+**5. Visualising the Training set results**
+```python
+plt.scatter(X_train, y_train, color = 'red')
+plt.plot(X_train, regressor.predict(X_train), color = 'blue')
+plt.title('Salary vs Experience (Training set)')
+plt.xlabel('Years of Experience')
+plt.ylabel('Salary')
+plt.show()
+```
+
+**Visualising the Test set results**
+```python
+plt.scatter(X_test, y_test, color = 'red')
+plt.plot(X_train, regressor.predict(X_train), color = 'blue')
+plt.title('Salary vs Experience (Test set)')
+plt.xlabel('Years of Experience')
+plt.ylabel('Salary')
+plt.show()
+```
+
+The overall goal here is to create a model that will predict Salary based on Years of Experience...
+
+---
+
+## **Multiple Linear Regression Model (Test and Train)**
+
+```python
+from sklearn.preprocessing import LabelEncoder, OneHotEncoder
+labelencoder = LabelEncoder()
+X[:, 3] = labelencoder.fit_transform(X[:, 3]) #Note this
+onehotencoder = OneHotEncoder(categorical_features = [3])
+X = onehotencoder.fit_transform(X).toarray()
+```
+
+```python
+import numpy as np
+import matplotlib.pyplot as plt
+import pandas as pd
+
+# Importing the dataset
+dataset = pd.read_csv('50_Startups.csv')
+X = dataset.iloc[:, :-1].values X = df.drop(y)
+y = dataset.iloc[:, 4].values  Y = df[y]
+
+# Let’s look at the data: 
+dataset.head()
+```
+
+```python
+# Encoding categorical data
+from sklearn.preprocessing import LabelEncoder, OneHotEncoder
+labelencoder = LabelEncoder()
+X[:, 3] = labelencoder.fit_transform(X[:, 3])
+onehotencoder = OneHotEncoder(categorical_features = [3])
+X = onehotencoder.fit_transform(X).toarray()
+
+# Avoiding the Dummy Variable Trap
+X = X[:, 1:]
+```
+
+```python
+# Splitting the dataset
+from sklearn.model_selection import train_test_split
+X_train, X_test, y_train, y_test = train_test_split(X, y, test_size = 0.2, random_state = 42)
+```
+
+```python
+# Fitting Multiple Linear Regression
+from sklearn.linear_model import LinearRegression
+regressor = LinearRegression()
+regressor.fit(X_train, y_train)
+
+# Predicting the Test set results
+y_pred = regressor.predict(X_test)
+```
+
+**Summary**
+```python
+import pandas as pd
+from sklearn.model_selection import train_test_split
+
+df = pd.read_csv('your_dataset.csv')
+
+X = df.drop('target_column', axis=1)
+y = df['target_column']
+
+X_train, X_test, y_train, y_test = train_test_split(X, y, test_size=0.2, random state = 42)
+
+print("Training set shapes:", X_train.shape, y_train.shape)
+print("Test set shapes:", X_test.shape, y_test.shape)
+
+print("\nSome features from the training set:")
+print(X_train)
+print("\nSome labels from the training set:")
+print(y_train)
+```
+
+---
+
+## **Decision Tree Regression**
+
+```python
+import numpy as np
+import matplotlib.pyplot as plt
+import pandas as pd
+
+dataset = pd.read_csv('Position_Salaries.csv')
+X = dataset.iloc[:, 1:2].values X=df.drop(y)
+y = dataset.iloc[:, 2].values y = df[y]
+
+from sklearn.cross_validation import train_test_split
+X_train, X_test, y_train, y_test = train_test_split(X, y, test_size = 0.2, random_state = 0)
+
+from sklearn.tree import DecisionTreeRegressor
+regressor = DecisionTreeRegressor(random_state = 0)
+regressor.fit(X, y)
+
+y_pred = regressor.predict(X_test)
+regressor.score=(X_test, y_test)
+
+from sklearn.metrics import classification_report
+classification_report(y_test,y_test) # → precision, recall, f1 score, support
+
+features = pd.Dataframe(regressor.feature_importances_, index = X.columns)
+```
+
+```python
+# Visualising the Decision Tree Regression results
+X_grid = np.arange(min(X), max(X), 0.01)
+X_grid = X_grid.reshape((len(X_grid), 1))
+
+plt.scatter(X, y, color = 'red')
+plt.plot(X_grid, regressor.predict(X_grid), color = 'blue')
+plt.title('Truth or Bluff (Decision Tree Regression)')
+plt.xlabel('Position level')
+plt.ylabel('Salary')
+plt.show()
+```
+
+---
+
+## **Random Forest Regression**
+
+```python
+import numpy as np
+import matplotlib.pyplot as plt
+import pandas as pd
+%matplotlib inline
+
+dataset = pd.read_csv('Position_Salaries.csv')
+X = dataset.iloc[:, 1:2].values X=df.drop(y)
+y = dataset.iloc[:, 2].values y=df[y]
+
+from sklearn.cross_validation import train_test_split
+X_train, X_test, y_train, y_test = train_test_split(X, y, test_size = 0.2, random_state = 0)
+
+# Feature Scaling
+from sklearn.preprocessing import StandardScaler
+sc_X = StandardScaler()
+X_train = sc_X.fit_transform(X_train)
+X_test = sc_X.transform(X_test)
+sc_y = StandardScaler()
+y_train = sc_y.fit_transform(y_train)
+
+from sklearn.ensemble import RandomForestRegressor
+regressor = RandomForestRegressor(n_estimators = 300, random_state = 0)
+regressor.fit(X, y)
+
+y_pred = regressor.predict(X_test)
+regressor.score=(X_test, y_test)
+
+from sklearn.metrics import classification_report
+classification_report(y_test,y_test)
+
+features = pd.Dataframe(regressor.feature_importances_, index = X.columns)
+```
+
+```python
+# Visualising the Random Forest Regression results
+X_grid = np.arange(min(X), max(X), 0.01)
+X_grid = X_grid.reshape((len(X_grid), 1))
+plt.scatter(X, y, color = 'red')
+plt.plot(X_grid, regressor.predict(X_grid), color = 'blue')
+plt.title('Truth or Bluff (Random Forest Regression)')
+plt.xlabel('Position level')
+plt.ylabel('Salary')
+plt.show()
+```
+
+---
+
+Let me know if you'd like me to generate a `.md` file or help embed this into your GitHub `README.md`.
