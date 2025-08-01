@@ -3,7 +3,8 @@ In this post, I will be sharing with you the standard of procedures Data Analyst
 Be curious and ask alot of questions to your data!
 
 # Data Pre-collection 
-- Develop expectations, set questions
+- Develop expectations, set questions to the interest of your audience
+- You should also check that the questions has not already been answered.
 - Collect data 
 - Compare expectations with data
 - If the expectations and data don't match, revise your expectations or fix (change or wrangle) the data to match expectations
