@@ -62,8 +62,46 @@ You have a general question identified to you by your boss, and your role as a D
 - Report building
 - Brief summary of findings
 - Gather feedback, what kind of extra questions do we need to find out? (Key! Answering new qns never end for a DA!)
-  
 
+# Types of question to ask
+## Descriptive questions
+A descriptive question is one that seeks to **summarize characteristics associated with the set of data.**
+  - Ex. determining the proportion of males, the mean number of servings of fresh fruits and vegetables per day, or the frequency of viral illnesses in a set of data collected from the group.
+
+There is no interpretation of the result itself as the result is a fact, an attribute of the set of data that you are
+working with.
+
+## Exploratory questions
+
+**Analyze the data to see if there are patterns, trends, or relationships between variables.** They will help you generate potential hypothesis to test in the next step. (You are not testing a hypothesis here, but coming up with a general assumptions to test.)
+
+  - Ex. From EDA, we found that people who ate healthier diets had fewer viral illnesses so you propose the hypothesis that among adults, eating at least 5 servings a day of fresh fruit and vegetables is associated with fewer viral
+illnesses per year. 
+
+## Inferential questions
+An inferential question would be a restatement of this proposed hypothesis as a question and would be **answered by
+analyzing a different set of data**, which in this example, is a representative sample of adults in the US. By analyzing
+this different set of data you are both **determining if the association you observed in your exploratory analysis holds
+in a different sample** and whether it holds in a sample that is representative of the adult US population, which would
+suggest that the association is applicable to all adults in the US. 
+
+## Predictive questions
+A predictive question would be one where you ask what types of people will eat a diet high in fresh fruits and vegetables
+during the next year. 
+
+In this type of question you are less interested in what causes someone to eat a certain diet, just **what characteristics predicts whether someone will eat this certain diet.**
+  - ex. For example, higher income may be one of the final set of predictors, and you may not know (or even care) why people with higher incomes are more likely to eat a diet high in fresh fruits and vegetables, but what is most important is that **income is a factor that predicts this behavior.**
+    
+## Causal questions
+A causal question asks about whether changing one factor will change another factor, on average, in a population. 
+## Mechanistic questions (HOW does A lead to B?)
+None of the questions so far will tell us if a diet will significantly indeed cause a reduction in no. of viral illneses. 
+- It doesn't tell us **HOW the diet leads to a reduction in the number of viral illnesses**
+- A question that asks how a diet high in fresh fruits and vegetables leads to a reduction in the number of viral illnesses would be a mechanistic question.
+
+## Alternative data
+Sometimes, the data we want does not exist or is too costly to collect. If this type of data set does not exist,
+then the best is to apply causal analysis methods to observational data and answer inferential questions about diet and viral illnesses.
 
 
 
